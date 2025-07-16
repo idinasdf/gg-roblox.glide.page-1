@@ -1,0 +1,57 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("gg-roblox.gldie.page SUPPORT PHONE", "DarkTheme")
+local Tab = Window:NewTab("main")
+local Section = Tab:NewSection("FLY GUI V4 (ของคนอื่น)")
+Section:NewButton("use", "ของคนอื่น", function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Better-Fly-GUI-44304"))()
+end)
+local Section = Tab:NewSection("invisible")
+Section:NewButton("use", "ของคนอื่น", function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-20557"))()
+end)
+local Section = Tab:NewSection("esp")
+Section:NewButton("use", ".", function()
+    local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+
+-- ฟังก์ชันสร้าง ESP
+local function createESP(player)
+	if player == localPlayer then return end -- ไม่ทำให้ตัวเอง
+	player.CharacterAdded:Connect(function(char)
+		repeat wait() until char:FindFirstChild("Head")
+
+		local head = char:FindFirstChild("Head")
+		if head then
+			local billboard = Instance.new("BillboardGui")
+			billboard.Name = "ESP"
+			billboard.Adornee = head
+			billboard.Size = UDim2.new(0, 100, 0, 20)
+			billboard.StudsOffset = Vector3.new(0, 2.5, 0)
+			billboard.AlwaysOnTop = true
+
+			local nameLabel = Instance.new("TextLabel")
+			nameLabel.Parent = billboard
+			nameLabel.Size = UDim2.new(1, 0, 1, 0)
+			nameLabel.Text = player.Name
+			nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+			nameLabel.TextStrokeTransparency = 0.5
+			nameLabel.BackgroundTransparency = 1
+			nameLabel.Font = Enum.Font.SourceSans
+			nameLabel.TextScaled = false
+			nameLabel.TextSize = 10 -- ขนาดตัวอักษรเล็ก
+			nameLabel.ClipsDescendants = true
+
+			billboard.Parent = head
+		end
+	end)
+end
+
+-- สร้าง ESP ให้ทุกคนในเกมตอนเริ่ม
+for _, player in pairs(Players:GetPlayers()) do
+	createESP(player)
+end
+
+-- สร้าง ESP ให้คนที่เข้ามาใหม่
+Players.PlayerAdded:Connect(createESP)
+
+end)
