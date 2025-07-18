@@ -1,0 +1,160 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("gui เว้ยไอน้อง gg-roblox.glide.page ✅", "DarkTheme")
+local Tab = Window:NewTab("main")
+local Section = Tab:NewSection("fly")
+Section:NewButton("use", ".", function()
+    
+
+local function stopFlying()
+	if flying then
+		flying = false
+		RunService:UnbindFromRenderStep("Flying")
+		if bodyGyro then bodyGyro:Destroy() end
+		if bodyVelocity then bodyVelocity:Destroy() end
+	end
+end
+
+UIS.InputBegan:Connect(function(input, processed)
+	if processed then return end
+	if input.KeyCode == Enum.KeyCode.E then
+		if flying then
+			stopFlying()
+		else
+			startFlying()
+		end
+	end
+end)
+
+-- หากตัวละครตาย ให้หยุดบิน
+player.CharacterAdded:Connect(function(char)
+	character = char
+	humanoid = character:WaitForChild("Humanoid")
+	hrp = character:WaitForChild("HumanoidRootPart")
+	stopFlying()
+end)
+
+end)
+
+
+
+
+
+local Section = Tab:NewSection("inv")
+Section:NewButton("use", ".", function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-20557"))()
+end)
+
+
+
+
+
+
+
+local Section = Tab:NewSection("esp player name")
+Section:NewButton("use", ".", function()
+    -- Minimal ESP by ChatGPT
+-- แสดงชื่อผู้เล่นด้วยตัวหนังสือเล็ก ๆ
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+ 
+function createMiniESP(player)
+    if player == localPlayer then return end
+    local character = player.Character or player.CharacterAdded:Wait()
+    local head = character:WaitForChild("Head", 5)
+    if not head then return end
+ 
+    -- Billboard GUI
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "MiniESP"
+    billboard.Adornee = head
+    billboard.Size = UDim2.new(0, 100, 0, 20)
+    billboard.StudsOffset = Vector3.new(0, 2.5, 0)
+    billboard.AlwaysOnTop = true
+    billboard.LightInfluence = 0
+    billboard.Parent = head
+ 
+    -- TextLabel (ตัวหนังสือเล็กๆ)
+    local nameLabel = Instance.new("TextLabel", billboard)
+    nameLabel.Size = UDim2.new(1, 0, 1, 0)
+    nameLabel.BackgroundTransparency = 1
+    nameLabel.Text = player.Name
+    nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    nameLabel.TextStrokeTransparency = 0.8
+    nameLabel.Font = Enum.Font.SourceSans
+    nameLabel.TextScaled = false
+    nameLabel.TextSize = 10
+end
+ 
+-- สร้าง ESP ให้ทุกคน
+for _, p in pairs(Players:GetPlayers()) do
+    if p ~= localPlayer then
+        createMiniESP(p)
+    end
+end
+ 
+-- อัปเดตหากมีผู้เล่นใหม่เข้า
+Players.PlayerAdded:Connect(function(p)
+    p.CharacterAdded:Connect(function()
+        wait(1)
+        createMiniESP(p)
+    end)
+end)
+ 
+print("✅ ESP แบบตัวหนังสือเล็ก เรียบร้อยแล้ว!")
+ 
+
+end)
+
+
+local Section = Tab:NewSection("noclip")
+Section:NewButton("use", ".", function()
+    local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+ 
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local noclipEnabled = false
+ 
+-- ฟังก์ชันเปิด/ปิด noclip
+local function toggleNoclip()
+	noclipEnabled = not noclipEnabled
+end
+ 
+-- อัปเดตทุกเฟรม
+RunService.Stepped:Connect(function()
+	if noclipEnabled then
+		for _, part in pairs(character:GetDescendants()) do
+			if part:IsA("BasePart") and part.CanCollide == true then
+				part.CanCollide = false
+			end
+		end
+	else
+		for _, part in pairs(character:GetDescendants()) do
+			if part:IsA("BasePart") and part.CanCollide == false then
+				part.CanCollide = true
+			end
+		end
+	end
+end)
+ 
+-- ฟังการกดปุ่ม E
+UIS.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.E then
+		toggleNoclip()
+	end
+end)
+local function callback(Text)
+end
+end)
+
+
+
+
+
+
+local Section = Tab:NewSection("keyblind")
+Section:NewKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.F, function()
+	Library:ToggleUI()
+end)
